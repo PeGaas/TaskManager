@@ -1,0 +1,70 @@
+<div class="container-bg">
+
+
+<div class="container container-bg">
+
+  <h1 class="text-center">SIMPLE TODO LISTS</h1>
+  <p class="text-center">FROM PETER GAAS</p>
+  <br>
+
+  <% @projects.each do |project| %>
+  <div class="p-2 project-bg text-white">
+    <i class="far fa-2x fa-calendar-times"></i>
+    <span class="v-align"><%= project.name %></span>
+    <span class="float-right pt-6">
+      <%= link_to edit_project_path(project) do %>
+        <i class="fas fa-pen color-icon"></i>
+      <% end %>
+      <span class="color-pipe">|</span>
+      <%= link_to project_path(project), method: :delete, data: { confirm: 'Are you sure?' } do %>
+        <i class="fas fa-trash-alt color-icon"></i>
+      <% end %>
+    </span>
+  </div>
+
+  <div class="p-2 task-bg">
+    <%= form_with(model: [ @task, Task.new ], url: project_tasks_path(project), local: true, class: "") do |form| %>
+    <div class="input-group mb-2">
+      <i class="fas fa-2x fa-plus color-plus-gren"></i>
+      <%= form.text_field :name, placeholder: "Start typing here to create a task..." , class: "form-control" %>
+      <%= form.submit "Add Task", class: "btn btn-outline-secondary gren-button" %>
+    </div>
+    <% end %>
+  </div>
+
+  <div class="mb-4 div-radius bg-white">
+    <% project.tasks.each do |task| %>
+      <div class="padding">
+        <div class="float-left">
+          <%= check_box("tag", tag.id, {checked: false}) %>
+        </div>
+        <div class="margin-left border-tasks float-left">
+          <%= task.name %>
+        </div>
+        <div class="float-right">
+          <span draggable="true"><i class="fas fa-arrows-alt-v color-pen-task"></i></span>
+          <span class="color-pen-task">|</span>
+          <%= link_to edit_project_task_path(project, task) do %>
+            <i class="fas fa-pen color-pen-task"></i>
+          <% end %>
+          <span class="color-pen-task">|</span>
+          <%= link_to project_task_path(project, task), method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <i class="fas fa-trash-alt color-pen-task"></i>
+          <% end %>
+        </div>
+      </div>
+      <hr>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="text-center">
+    <button type="button" class="btn add-project-bg margin-b">
+      <i class="fas fa-2x fa-plus color-plus-blue"></i>
+      <%= link_to 'Add TODO List', new_project_path, class: "text-center text-color-white" %>
+    </button>
+  </div>
+
+</div>
+
+</div>
