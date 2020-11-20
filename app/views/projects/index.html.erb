@@ -36,7 +36,7 @@
     <% project.tasks.each do |task| %>
       <div class="padding">
         <div class="float-left">
-          <%= check_box("tag", tag.id, {checked: false}) %>
+          <%= check_box("check-option", task.id, { class: 'check', id: "check-option-#{task.id}" }) %>
         </div>
         <div class="margin-left border-tasks float-left">
           <%= task.name %>
